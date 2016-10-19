@@ -14,10 +14,7 @@ Import
 
 ```
 # Master via standard import
-get get github.com/Scalingo/go-etcd-lock
-
-# Last stable is v0 via gopkg.in
-go get gopkg.in/Scalingo/go-etcd-lock.v0/lock
+get get github.com/IBM-Bluemix/go-etcd-lock/lock
 ```
 
 Example
@@ -47,7 +44,7 @@ if err != nil {
 Testing
 -------
 
-You need a etcd instance running on `localhost:4001`, then:
+You need a etcd instance running on `localhost:2379`, then:
 
 ```
 go test ./...
