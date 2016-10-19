@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	s, err := net.Dial("tcp", "127.0.0.1:4001")
+	s, err := net.Dial("tcp", "127.0.0.1:2379")
 	if err != nil {
 		log.Fatalln("etcd is not running on localhost", err)
 	}
@@ -16,6 +16,6 @@ func init() {
 }
 
 func client() *ect.Client {
-	client, _ := ect.New(ect.Config{Endpoints: []string{"http://localhost:4001"}})
+	client, _ := ect.New(ect.Config{Endpoints: []string{"http://localhost:2379"}})
 	return &client
 }
