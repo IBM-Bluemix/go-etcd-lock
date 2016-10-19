@@ -1,0 +1,15 @@
+package: github.com/IBM-Bluemix/go-etcd-lock
+import:
+- package: github.com/coreos/etcd
+  version: 3.1.0-rc.0
+  subpackages:
+  - client
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: gopkg.in/errgo.v1
+testImport:
+- package: github.com/smartystreets/goconvey
+  version: 1.6.2
+  subpackages:
+  - convey

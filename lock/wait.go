@@ -1,10 +1,11 @@
 package lock
 
 import (
+	"sort"
+
 	ect "github.com/coreos/etcd/client"
 	"golang.org/x/net/context"
 	"gopkg.in/errgo.v1"
-	"sort"
 )
 
 func (locker *EtcdLocker) Wait(key string) error {

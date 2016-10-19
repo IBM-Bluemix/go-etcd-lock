@@ -2,12 +2,13 @@ package lock
 
 import (
 	"fmt"
-	ect "github.com/coreos/etcd/client"
-	"golang.org/x/net/context"
-	"gopkg.in/errgo.v1"
 	"os"
 	"sort"
 	"time"
+
+	ect "github.com/coreos/etcd/client"
+	"golang.org/x/net/context"
+	"gopkg.in/errgo.v1"
 )
 
 type Error struct {
