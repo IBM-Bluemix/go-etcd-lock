@@ -11,7 +11,7 @@ func (l *EtcdLock) Release() error {
 		return errgo.New("nil lock")
 	}
 
-	kapi := ect.NewKeysAPI(*l.client)
+	kapi := ect.NewKeysAPI(l.client)
 	_, err := kapi.Delete(context.Background(), l.key, &ect.DeleteOptions{Recursive: false})
 	if err != nil {
 		return errgo.Mask(err)

@@ -8,7 +8,7 @@ import (
 )
 
 func TestRelease(t *testing.T) {
-	locker := NewEtcdLocker(client())
+	locker := NewEtcdLocker(client(), true)
 	Convey("After release a key should be lockable immediately", t, func() {
 		lock, err := locker.Acquire("/lock-release", 10)
 		So(lock, ShouldNotBeNil)

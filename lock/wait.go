@@ -10,7 +10,7 @@ import (
 
 func (locker *EtcdLocker) Wait(key string) error {
 	key = addPrefix(key)
-	kapi := ect.NewKeysAPI(*locker.client)
+	kapi := ect.NewKeysAPI(locker.client)
 	ctx := context.Background()
 
 	for {

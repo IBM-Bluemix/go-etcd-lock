@@ -26,11 +26,12 @@ type Locker interface {
 }
 
 type EtcdLocker struct {
-	client *ect.Client
+	client ect.Client
+	sync   bool
 }
 
-func NewEtcdLocker(client *ect.Client) Locker {
-	return &EtcdLocker{client: client}
+func NewEtcdLocker(client ect.Client, sync bool) Locker {
+	return &EtcdLocker{client: client, sync: sync}
 }
 
 type Lock interface {
@@ -38,28 +39,28 @@ type Lock interface {
 }
 
 type EtcdLock struct {
-	client *ect.Client
+	client ect.Client
 	key    string
 	index  uint64
 }
 
 func (locker *EtcdLocker) Acquire(key string, ttl uint64) (Lock, error) {
-	return locker.acquire(locker.client, key, ttl, false)
+	return locker.acquire(key, ttl, false)
 }
 
 func (locker *EtcdLocker) WaitAcquire(key string, ttl uint64) (Lock, error) {
-	return locker.acquire(locker.client, key, ttl, true)
+	return locker.acquire(key, ttl, true)
 }
 
-func (locker *EtcdLocker) acquire(client *ect.Client, key string, ttl uint64, wait bool) (Lock, error) {
+func (locker *EtcdLocker) acquire(key string, ttl uint64, wait bool) (Lock, error) {
 	hasLock := false
 	key = addPrefix(key)
-	lock, err := addLockDirChild(client, key)
+	lock, err := locker.addLockDirChild(key)
 	if err != nil {
 		return nil, errgo.Mask(err)
 	}
 
-	kapi := ect.NewKeysAPI(*client)
+	kapi := ect.NewKeysAPI(locker.client)
 	ctx := context.Background()
 	for !hasLock {
 		res, err := kapi.Get(ctx, key, &ect.GetOptions{Recursive: true, Sort: true})
@@ -73,11 +74,10 @@ func (locker *EtcdLocker) acquire(client *ect.Client, key string, ttl uint64, wa
 				if !wait {
 					kapi.Delete(ctx, lock.Node.Key, &ect.DeleteOptions{Recursive: false})
 					return nil, &Error{res.Node.Nodes[0].Value}
-				} else {
-					err = locker.Wait(lock.Node.Key)
-					if err != nil {
-						return nil, errgo.Mask(err)
-					}
+				}
+				err = locker.Wait(lock.Node.Key)
+				if err != nil {
+					return nil, errgo.Mask(err)
 				}
 			} else {
 				// if the first index is the current one, it's our turn to lock the key
@@ -95,18 +95,20 @@ func (locker *EtcdLocker) acquire(client *ect.Client, key string, ttl uint64, wa
 		return nil, errgo.Mask(err)
 	}
 
-	return &EtcdLock{client, lock.Node.Key, lock.Node.CreatedIndex}, nil
+	return &EtcdLock{locker.client, lock.Node.Key, lock.Node.CreatedIndex}, nil
 }
 
-func addLockDirChild(client *ect.Client, key string) (*ect.Response, error) {
+func (locker *EtcdLocker) addLockDirChild(key string) (*ect.Response, error) {
 	hostname, err := os.Hostname()
 	if err != nil {
 		return nil, errgo.Notef(err, "fail to get hostname")
 	}
 
 	ctx := context.Background()
-	(*client).Sync(ctx)
+	if locker.sync {
+		locker.client.Sync(ctx)
+	}
 
-	kapi := ect.NewKeysAPI(*client)
+	kapi := ect.NewKeysAPI(locker.client)
 	return kapi.CreateInOrder(ctx, key, hostname, nil)
 }

@@ -15,7 +15,7 @@ func init() {
 	s.Close()
 }
 
-func client() *ect.Client {
+func client() ect.Client {
 	client, _ := ect.New(ect.Config{Endpoints: []string{"http://localhost:2379"}})
-	return &client
+	return client
 }
