@@ -9,7 +9,7 @@ import (
 )
 
 func TestAcquire(t *testing.T) {
-	locker := NewEtcdLocker(client())
+	locker := NewEtcdLocker(client(), true)
 	Convey("A lock shouldn't be acquired twice", t, func() {
 		lock, err := locker.Acquire("/lock", 10)
 		defer lock.Release()
@@ -36,7 +36,7 @@ func TestAcquire(t *testing.T) {
 }
 
 func TestWaitAcquire(t *testing.T) {
-	locker := NewEtcdLocker(client())
+	locker := NewEtcdLocker(client(), true)
 	Convey("WaitLock should lock a key when the key is free", t, func() {
 		Convey("It should wait when a key is locked", func() {
 			lock, err := locker.Acquire("/lock-wait-acquire", 2)

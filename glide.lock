@@ -1,0 +1,35 @@
+hash: 5a8d435f122b5d87f1ed1ab58c6a8e6cca6c0a6d642597cad1e6153ca5fb6f33
+updated: 2016-10-26T12:59:39.863353215-04:00
+imports:
+- name: github.com/coreos/etcd
+  version: fd17c9101d94703f6f4c3d8d6cfb72b62b894cd7
+  subpackages:
+  - Godeps/_workspace/src/github.com/ugorji/go/codec
+  - Godeps/_workspace/src/golang.org/x/net/context
+  - client
+  - pkg/pathutil
+  - pkg/types
+- name: golang.org/x/net
+  version: f315505cf3349909cdf013ea56690da34e96a451
+  subpackages:
+  - context
+- name: gopkg.in/errgo.v1
+  version: 66cb46252b94c1f3d65646f54ee8043ab38d766c
+testImports:
+- name: github.com/gopherjs/gopherjs
+  version: 6f5a3c4a73badf117936d7d61a046e2fab8e2adb
+  subpackages:
+  - js
+- name: github.com/jtolds/gls
+  version: 8ddce2a84170772b95dd5d576c48d517b22cac63
+- name: github.com/smartystreets/assertions
+  version: 2063fd1cc7c975db70502811a34b06ad034ccdf2
+  subpackages:
+  - internal/go-render/render
+  - internal/oglematchers
+- name: github.com/smartystreets/goconvey
+  version: d4c757aa9afd1e2fc1832aaab209b5794eb336e1
+  subpackages:
+  - convey
+  - convey/gotest
+  - convey/reporting

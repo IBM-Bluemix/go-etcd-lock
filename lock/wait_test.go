@@ -8,7 +8,7 @@ import (
 )
 
 func TestWait(t *testing.T) {
-	locker := NewEtcdLocker(client())
+	locker := NewEtcdLocker(client(), true)
 	Convey("Wait should wait the end of a lock", t, func() {
 		t1 := time.Now()
 		_, err := locker.Acquire("/lock-wait", 2)
