@@ -3,6 +3,7 @@ etcd-lock
 
 
 [![Build Status](https://travis-ci.org/IBM-Bluemix/go-etcd-lock.svg?branch=master)](https://travis-ci.org/IBM-Bluemix/go-etcd-lock)
+[![Coverage Status](https://coveralls.io/repos/github/IBM-Bluemix/go-etcd-lock/badge.svg?branch=master)](https://coveralls.io/github/IBM-Bluemix/go-etcd-lock?branch=master)
 
 This is a basic client implementation of lock based on the logics in mod/lock
 
