@@ -15,7 +15,8 @@ fmt:
 
 .PHONY: test
 test:
-	go test -v -covermode=count -coverprofile=coverage.out -race ${GOPACKAGES}
+	#go test -v -covermode=count -coverprofile=coverage.out -race ${GOPACKAGES}
+	go test -v -race ${GOPACKAGES}
 
 .PHONY: vet
 vet:
