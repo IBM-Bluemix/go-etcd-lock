@@ -9,9 +9,6 @@ matrix:
   allow_failures:
   - go: tip
 
-cache:
-  bundler: true
-
 sudo: true
 
 before_install:
@@ -29,5 +26,5 @@ script:
   - make vet
   - make fmt
 
-after_success:
-    - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+#after_success:
+#    - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
