@@ -78,7 +78,9 @@ func (locker *MockLocker) Wait(path string) error {
 }
 
 func (lock *MockLock) Release() error {
-	lock.locked = false
-	lock.mutex.Unlock()
+	if lock.locked {
+		lock.locked = false
+		lock.mutex.Unlock()
+	}
 	return nil
 }
