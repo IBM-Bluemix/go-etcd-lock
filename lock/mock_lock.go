@@ -31,12 +31,12 @@ func (locker *MockLocker) Acquire(path string, ttl uint64) (Lock, error) {
 		m = locker.locks[path]
 	}
 
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
 	if m.locked {
 		return nil, &Error{hostname: "localhost"}
-	} else {
-		m.mutex.Lock()
-		m.locked = true
 	}
+	m.locked = true
 
 	if ttl > 0 {
 		go func() {
@@ -78,9 +78,10 @@ func (locker *MockLocker) Wait(path string) error {
 }
 
 func (lock *MockLock) Release() error {
+	lock.mutex.Lock()
+	defer lock.mutex.Unlock()
 	if lock.locked {
 		lock.locked = false
-		lock.mutex.Unlock()
 	}
 	return nil
 }
