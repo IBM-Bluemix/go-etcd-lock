@@ -1,29 +1,36 @@
-hash: 5a8d435f122b5d87f1ed1ab58c6a8e6cca6c0a6d642597cad1e6153ca5fb6f33
-updated: 2016-10-26T12:59:39.863353215-04:00
+hash: 4b659ae03c4eca2bbe741b548f02a2291e0f311187e2f320c8157a753b135eb2
+updated: 2017-03-07T15:16:39.36890789-05:00
 imports:
 - name: github.com/coreos/etcd
-  version: fd17c9101d94703f6f4c3d8d6cfb72b62b894cd7
+  version: 3f515e1849029a308a0ae47182623feb08fc68de
   subpackages:
-  - Godeps/_workspace/src/github.com/ugorji/go/codec
-  - Godeps/_workspace/src/golang.org/x/net/context
   - client
   - pkg/pathutil
   - pkg/types
+  - version
+- name: github.com/coreos/go-semver
+  version: 568e959cd89871e61434c1143528d9162da89ef2
+  subpackages:
+  - semver
+- name: github.com/ugorji/go
+  version: ded73eae5db7e7a0ef6f55aace87a2873c5d2b74
+  subpackages:
+  - codec
 - name: golang.org/x/net
-  version: f315505cf3349909cdf013ea56690da34e96a451
+  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
   subpackages:
   - context
 - name: gopkg.in/errgo.v1
-  version: 66cb46252b94c1f3d65646f54ee8043ab38d766c
+  version: 442357a80af5c6bf9b6d51ae791a39c3421004f3
 testImports:
 - name: github.com/gopherjs/gopherjs
-  version: 6f5a3c4a73badf117936d7d61a046e2fab8e2adb
+  version: 7d94d732be268c4904141f8b8604eb2d6d6544a1
   subpackages:
   - js
 - name: github.com/jtolds/gls
-  version: 8ddce2a84170772b95dd5d576c48d517b22cac63
+  version: bb0351aa7eb6f322f32667d51375f26a2bca6628
 - name: github.com/smartystreets/assertions
-  version: 2063fd1cc7c975db70502811a34b06ad034ccdf2
+  version: c9ee7d9e9a2aeec0bee7c4a516f3e0ad7cb7e558
   subpackages:
   - internal/go-render/render
   - internal/oglematchers
