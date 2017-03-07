@@ -1,7 +1,6 @@
 package: github.com/IBM-Bluemix/go-etcd-lock
 import:
 - package: github.com/coreos/etcd
-  version: 2.3.7
   subpackages:
   - client
 - package: golang.org/x/net
