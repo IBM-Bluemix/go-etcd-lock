@@ -55,7 +55,7 @@ func (locker *EtcdLocker) WaitAcquire(key string, ttl uint64) (Lock, error) {
 func (locker *EtcdLocker) acquire(key string, ttl uint64, wait bool) (Lock, error) {
 	hasLock := false
 	key = addPrefix(key)
-	lock, err := locker.addLockDirChild(key)
+	lock, err := locker.addLockDirChild(key, ttl)
 	if err != nil {
 		return nil, errgo.Mask(err)
 	}
@@ -98,7 +98,7 @@ func (locker *EtcdLocker) acquire(key string, ttl uint64, wait bool) (Lock, erro
 	return &EtcdLock{locker.client, lock.Node.Key, lock.Node.CreatedIndex}, nil
 }
 
-func (locker *EtcdLocker) addLockDirChild(key string) (*ect.Response, error) {
+func (locker *EtcdLocker) addLockDirChild(key string, ttl uint64) (*ect.Response, error) {
 	hostname, err := os.Hostname()
 	if err != nil {
 		return nil, errgo.Notef(err, "fail to get hostname")
@@ -110,5 +110,5 @@ func (locker *EtcdLocker) addLockDirChild(key string) (*ect.Response, error) {
 	}
 
 	kapi := ect.NewKeysAPI(locker.client)
-	return kapi.CreateInOrder(ctx, key, hostname, nil)
+	return kapi.CreateInOrder(ctx, key, hostname, &ect.CreateInOrderOptions{TTL: time.Duration(ttl) * time.Second})
 }
