@@ -110,5 +110,5 @@ func (locker *EtcdLocker) addLockDirChild(key string) (*ect.Response, error) {
 	}
 
 	kapi := ect.NewKeysAPI(locker.client)
-	return kapi.CreateInOrder(ctx, key, hostname, nil)
+	return kapi.CreateInOrder(ctx, key, hostname, &ect.CreateInOrderOptions{TTL: time.Duration(1) * time.Hour})
 }
