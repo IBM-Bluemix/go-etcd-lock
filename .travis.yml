@@ -2,7 +2,13 @@ language: go
 
 go:
   - 1.7.1
+  - 1.7.4
   - tip
+  
+env:
+  - MAKE_TASK=test
+  - MAKE_TASK=vet
+  - MAKE_TASK=fmt
 
 matrix:
   fast_finish: true
@@ -22,9 +28,7 @@ before_script:
   - make deps
 
 script:
-  - make test
-  - make vet
-  - make fmt
+  - make ${MAKE_TASK}
 
 after_success:
-    - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN; fi'
+    - 'if [ "$TRAVIS_PULL_REQUEST" = "false" && "$MAKE_TASK" = "test" ]; then goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN; fi'
