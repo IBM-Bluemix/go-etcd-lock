@@ -54,7 +54,7 @@ func (locker *EtcdLocker) Acquire(key string, ttl uint64 /*, wait bool*/) (Lock,
 	kapi := ect.NewKeysAPI(locker.client)
 	ctx := context.Background()
 	for !hasLock {
-		res, err := kapi.Get(ctx, key, &ect.GetOptions{Recursive: true, Sort: true})
+		res, err := kapi.Get(ctx, key, &ect.GetOptions{Recursive: true, Sort: true, Quorum: true})
 		if err != nil {
 			return nil, errgo.Mask(err)
 		}
