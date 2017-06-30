@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	prefix = "/etcd-lock"
+	prefix = "/etcd-lock-flat"
 )
 
 func addPrefix(key string) string {
