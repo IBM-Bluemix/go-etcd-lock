@@ -43,6 +43,13 @@ type EtcdLock struct {
 }
 
 func (locker *EtcdLocker) Acquire(key string, ttl uint64) (Lock, error) {
+	// Remove leading slash so that it does not turn into an underscore and
+	// thus become a hidden key in etcd.
+	if strings.HasPrefix(key, "/") {
+		key = key[1:]
+	}
+	// Replace slashes with underscores in the key so that no directory
+	// hierarchy needs to be created and cleaned up later.
 	key = strings.Replace(key, "/", "_", -1)
 	key = addPrefix(key)
 
